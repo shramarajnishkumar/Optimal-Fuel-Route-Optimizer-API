@@ -1,0 +1,178 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Spotter Fuel Route Optimizer API",
+    "description": "Collection of API requests to demonstrate the Fuel Route Optimizer API built with Django and OSRM.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Optimize Route - Cross Country (LA to NYC)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Los Angeles, CA\",\n  \"finish\": \"New York, NY\",\n  \"tank_range_miles\": 500,\n  \"mpg\": 10,\n  \"strategy\": \"balanced\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/route-optimize/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route-optimize", ""]
+        },
+        "description": "Calculates optimal fuel stops for a cross-country route (~2,789 miles). Takes ~300ms, only 1 routing API call."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Optimize Route - Corner to Corner (Miami to Seattle)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Miami, FL\",\n  \"finish\": \"Seattle, WA\",\n  \"tank_range_miles\": 500,\n  \"mpg\": 10,\n  \"strategy\": \"balanced\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/route-optimize/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route-optimize", ""]
+        },
+        "description": "Calculates optimal fuel stops from Miami, FL to Seattle, WA (~3,300 miles)."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Optimize Route - Midwest (Dallas to Chicago)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Dallas, TX\",\n  \"finish\": \"Chicago, IL\",\n  \"tank_range_miles\": 500,\n  \"mpg\": 10\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/route-optimize/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route-optimize", ""]
+        },
+        "description": "Calculates route and stops for Dallas to Chicago (~920 miles)."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Optimize Route - GET Request (Query Params)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/route-optimize/?start=San Francisco, CA&finish=Boston, MA&tank_range_miles=500&mpg=10",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route-optimize", ""],
+          "query": [
+            {
+              "key": "start",
+              "value": "San Francisco, CA"
+            },
+            {
+              "key": "finish",
+              "value": "Boston, MA"
+            },
+            {
+              "key": "tank_range_miles",
+              "value": "500"
+            },
+            {
+              "key": "mpg",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Demonstrates that GET requests with query parameters are also fully supported by the API."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Short Route - Direct Trip (Austin to Dallas)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Austin, TX\",\n  \"finish\": \"Dallas, TX\",\n  \"tank_range_miles\": 500,\n  \"mpg\": 10\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/route-optimize/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route-optimize", ""]
+        },
+        "description": "Demonstrates the <= 500 miles edge case: vehicle can reach destination on starting tank (0 intermediate stops needed)."
+      },
+      "response": []
+    },
+    {
+      "name": "6. Cost-Optimal DP Strategy (LA to NYC)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Los Angeles, CA\",\n  \"finish\": \"New York, NY\",\n  \"tank_range_miles\": 500,\n  \"mpg\": 10,\n  \"strategy\": \"cost_optimal\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/route-optimize/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route-optimize", ""]
+        },
+        "description": "Runs pure DAG Dynamic Programming to achieve global mathematical minimum fuel cost."
+      },
+      "response": []
+    },
+    {
+      "name": "7. Health Check Endpoint",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/health/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "health", ""]
+        },
+        "description": "Verifies API server status and reports count of indexed truck stops."
+      },
+      "response": []
+    }
+  ]
+}
