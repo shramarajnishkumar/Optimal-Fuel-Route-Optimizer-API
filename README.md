@@ -235,3 +235,8 @@ A ready-to-import Postman collection is located at:
    - `5. Short Route - Direct Trip (Austin to Dallas, <= 500 mi)`
    - `6. Cost-Optimal DP Strategy`
    - `7. Health Check Endpoint`
+
+---
+
+## 🎥 Loom Video Recording
+https://www.loom.com/share/b8cdd0758ac345c9a47c1d94e203f1a6
